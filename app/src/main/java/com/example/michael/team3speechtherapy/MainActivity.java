@@ -12,9 +12,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
         mStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopRecording();
+                try {
+                    stopRecording();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -86,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         recordingThread.start();
     }
 
-    void stopRecording() {
+    void stopRecording() throws IOException {
         if (null != record) {
             isRecording = false;
             record.stop();
@@ -96,6 +103,40 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "Stopped Recording", Toast.LENGTH_LONG);
             toast.show();
         }
+        try {
+            getFormants();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getFormants() throws IOException {
+        byte[] bData;
+        short[] sData;
+        double[] dData;
+        bData = readAudioDatafromFile();
+        sData = byte2short(bData);
+        dData = short2double(sData);
+        double[][] formants;
+        double[] tmp;
+        HammingWindow hamm = new HammingWindow(dData.length); // FIX PARAMETERS
+        tmp = hamm.applyFunction(dData);
+        LinearPredictiveCoding lpc = new LinearPredictiveCoding(dData.length, 2); // FIX PARAMETERS
+        formants = lpc.applyLinearPredictiveCoding(tmp);
+    }
+
+    private byte[] readAudioDatafromFile() throws IOException {
+        File f = new File(FILE_PATH);
+        byte byteData[] = new byte[(int)f.length() / Byte.SIZE];
+        FileInputStream is = null;
+        try {
+            is = new FileInputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        is.read(byteData);
+        is.close();
+        return byteData;
     }
 
     private void writeAudioDataToFile() {
@@ -162,9 +203,10 @@ public class MainActivity extends AppCompatActivity {
         return shortData;
     }
 
-    /*
-    function that makes returns a double array that is the raw audio data from the file
-    or change code so that we send a double array to the function and never store the audio data (probably better)
-    todo: work on a branch that implements just that.
-     */
+    private double[] short2double (short[] shortData) {
+        double[] doubleData = new double[shortData.length];
+                for (int i = 0; i < shortData.length; i++)
+                    doubleData[i] = (double) shortData[i];
+        return doubleData;
+    }
 }
