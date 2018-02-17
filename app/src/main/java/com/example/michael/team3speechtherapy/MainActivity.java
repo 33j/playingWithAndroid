@@ -13,9 +13,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 
@@ -123,6 +125,17 @@ public class MainActivity extends AppCompatActivity {
         tmp = hamm.applyFunction(dData);
         LinearPredictiveCoding lpc = new LinearPredictiveCoding(dData.length, 2); // FIX PARAMETERS
         formants = lpc.applyLinearPredictiveCoding(tmp);
+        tmpwrite(formants);
+    }
+
+    private void tmpwrite(double[][] d) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/sdcard/hi.txt"));
+        for (int i = 0; i < d.length; i++) {
+            for (int j = 0; j < d.length; j++)
+                writer.write(Double.toString(d[i][j])+"\t");
+            writer.write("\n");
+        }
+        writer.close();
     }
 
     private byte[] readAudioDatafromFile() throws IOException {
