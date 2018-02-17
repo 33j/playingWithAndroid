@@ -16,12 +16,14 @@ public class Feedback {
 
 
     public static void saveToFile(){
-        String FILENAME = "hello_file";
+        /*String FILENAME = "hello_file";
         String string = "hello world!";
 
-       // FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-      //  fos.write(string.getBytes());
-    //    fos.close();
+        FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+        fos.write(string.getBytes());
+        fos.close();*/
+
+
     }
 
     //private static FileOutputStream openFileOutput(String filename, int modePrivate) {
@@ -47,6 +49,7 @@ public class Feedback {
 
 
     }
+
 }
 
 

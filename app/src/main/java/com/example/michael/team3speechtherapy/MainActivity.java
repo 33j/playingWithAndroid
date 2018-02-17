@@ -13,13 +13,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+
+import java.io.BufferedReader;
+import java.io.File;
+
+
 import java.io.BufferedWriter;
+
 import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
+import java.io.FileReader;
+
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
+
+import java.util.Calendar;
+import java.util.Date;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isRecording = false;
     private Thread recordingThread = null;
     private AudioRecord record = null;
+    private static final String COMMA_DELIMITER = ",";
     int BufferElements2Rec = 1024;
     int BytesPerElement = 2;
 
@@ -51,6 +66,22 @@ public class MainActivity extends AppCompatActivity {
         verifyStoragePermissions(MainActivity.this);
         initializeButtons();
         setListeners();
+        createFile();
+        try {
+            changeUserFile(1,2,"good","ee");
+            changeUserFile(1,2,"bad","ee");
+            changeUserFile(1,2,"ok","ee");
+            changeUserFile(1,2,"superb","ee");
+            changeUserFile(1,2,"amazing","ee");
+            changeUserFile(1,2,"wow","u");
+            changeUserFile(1,2,"good","u");
+            changeUserFile(1,2,"good","u");
+            changeUserFile(1,2,"good","u");
+            changeUserFile(1,2,"good","u");
+            changeUserFile(1,2,"good","u");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void initializeButtons() {
@@ -125,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         tmp = hamm.applyFunction(dData);
         LinearPredictiveCoding lpc = new LinearPredictiveCoding(dData.length, 2); // FIX PARAMETERS
         formants = lpc.applyLinearPredictiveCoding(tmp);
+
         tmpwrite(formants);
     }
 
@@ -136,7 +168,9 @@ public class MainActivity extends AppCompatActivity {
             writer.write("\n");
         }
         writer.close();
+
     }
+
 
     private byte[] readAudioDatafromFile() throws IOException {
         File f = new File(FILE_PATH);
@@ -152,6 +186,68 @@ public class MainActivity extends AppCompatActivity {
         return byteData;
     }
 
+    private void createFile(){
+        File internalStorageDir = getFilesDir();
+        File alice = new File(internalStorageDir, "alice.csv");
+
+    }
+    private void changeUserFile(double f1,double f2, String Score, String vowel) throws IOException {
+        String COMMA_DELIMITER = ",";
+        String NEW_LINE_SEPARATOR = "\n";
+
+        FileWriter fileWriter = new FileWriter("alice.csv",true);
+        Date currentTime = Calendar.getInstance().getTime();
+        fileWriter.append(String.valueOf(currentTime));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f1));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f2));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(Score);
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(vowel);
+        fileWriter.append(NEW_LINE_SEPARATOR);
+
+    }
+    private void changeUserFile(double f1,double f2) throws IOException {
+
+        String NEW_LINE_SEPARATOR = "\n";
+        File internalStorageDir = getFilesDir();
+        File alice = new File(internalStorageDir, "alice.csv");
+
+        FileWriter fileWriter = new FileWriter("alice.csv");
+        Date currentTime = Calendar.getInstance().getTime();
+        fileWriter.append(String.valueOf(currentTime));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f1));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f2));
+        fileWriter.append(COMMA_DELIMITER);
+
+        fileWriter.append(NEW_LINE_SEPARATOR);
+
+    }
+    //will be ported to James file
+    public static void readUserFile() throws IOException {
+        BufferedReader fileReader = new BufferedReader(new FileReader("alice.csv"));
+
+        String line = "";
+        String data[][];
+        String[] tokens;
+        while ((line = fileReader.readLine()) != null) {
+
+
+            //Get all tokens available in line
+
+            tokens = line.split(COMMA_DELIMITER);
+
+            if (tokens.length > 0) {
+
+
+
+            }
+        }
+    }
     private void writeAudioDataToFile() {
         // Write the output audio in byte
         short sData[] = new short[BufferElements2Rec];
