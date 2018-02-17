@@ -12,9 +12,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -98,6 +105,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void changeUserFile(double f1,double f2,String gender, String vowel) throws IOException {
+        String COMMA_DELIMITER = ",";
+        String NEW_LINE_SEPARATOR = "\n";
+        File internalStorageDir = getFilesDir();
+        File alice = new File(internalStorageDir, "alice.csv");
+
+        FileWriter fileWriter = new FileWriter("alice.csv");
+        Date currentTime = Calendar.getInstance().getTime();
+        fileWriter.append(String.valueOf(currentTime));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f1));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f2));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(gender);
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(vowel);
+        fileWriter.append(NEW_LINE_SEPARATOR);
+
+    }
+    public static void readUserFile() throws IOException {
+        BufferedReader fileReader = new BufferedReader(new FileReader("alice.csv"));
+        fileReader.readLine();
+        String line = "";
+        while ((line = fileReader.readLine()) != null) {
+
+            //Get all tokens available in line
+
+            String[] tokens = line.split(COMMA_DELIMITER);
+            if (tokens.length > 0) {
+
+            }
+        }
+    }
     private void writeAudioDataToFile() {
         // Write the output audio in byte
         short sData[] = new short[BufferElements2Rec];
