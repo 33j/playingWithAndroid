@@ -1,8 +1,5 @@
 package com.example.michael.team3speechtherapy;
 
-/**
- * Created by michael on 2/16/18.
- */
 import java.util.*;
 /**
  * Created by James Tam on 2/16/2018.
