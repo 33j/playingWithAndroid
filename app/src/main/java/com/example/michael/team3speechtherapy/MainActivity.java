@@ -133,7 +133,9 @@ public class MainActivity extends AppCompatActivity {
         tmp = hamm.applyFunction(dData);
         LinearPredictiveCoding lpc = new LinearPredictiveCoding(dData.length, 2); // FIX PARAMETERS
         formants = lpc.applyLinearPredictiveCoding(tmp);
+
     }
+
 
     private byte[] readAudioDatafromFile() throws IOException {
         File f = new File(FILE_PATH);
@@ -169,6 +171,26 @@ public class MainActivity extends AppCompatActivity {
         fileWriter.append(NEW_LINE_SEPARATOR);
 
     }
+    private void changeUserFile(double f1,double f2) throws IOException {
+        String COMMA_DELIMITER = ",";
+        String NEW_LINE_SEPARATOR = "\n";
+        File internalStorageDir = getFilesDir();
+        File alice = new File(internalStorageDir, "alice.csv");
+
+        FileWriter fileWriter = new FileWriter("alice.csv");
+        Date currentTime = Calendar.getInstance().getTime();
+        fileWriter.append(String.valueOf(currentTime));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f1));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(String.valueOf(f2));
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(gender);
+        fileWriter.append(COMMA_DELIMITER);
+        fileWriter.append(vowel);
+        fileWriter.append(NEW_LINE_SEPARATOR);
+
+    }
     public static void readUserFile() throws IOException {
         BufferedReader fileReader = new BufferedReader(new FileReader("alice.csv"));
         fileReader.readLine();
@@ -179,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
             String[] tokens = line.split(COMMA_DELIMITER);
             if (tokens.length > 0) {
+
 
             }
         }
