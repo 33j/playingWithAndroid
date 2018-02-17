@@ -2,6 +2,7 @@ package com.example.michael.team3speechtherapy;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -30,9 +31,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -141,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
     }
 
     private void getFormants() throws IOException {
@@ -188,66 +194,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void createFile(){
         File internalStorageDir = getFilesDir();
-        File alice = new File(internalStorageDir, "alice.csv");
+        try {
+            FileOutputStream file = openFileOutput("alice.csv", MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(file);
+            osw.flush();
+            osw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
     private void changeUserFile(double f1,double f2, String Score, String vowel) throws IOException {
         String COMMA_DELIMITER = ",";
         String NEW_LINE_SEPARATOR = "\n";
-
-        FileWriter fileWriter = new FileWriter("alice.csv",true);
+        FileOutputStream fos = openFileOutput("alice.csv",MODE_APPEND);
+        OutputStreamWriter osw = new OutputStreamWriter(fos);
         Date currentTime = Calendar.getInstance().getTime();
-        fileWriter.append(String.valueOf(currentTime));
-        fileWriter.append(COMMA_DELIMITER);
-        fileWriter.append(String.valueOf(f1));
-        fileWriter.append(COMMA_DELIMITER);
-        fileWriter.append(String.valueOf(f2));
-        fileWriter.append(COMMA_DELIMITER);
-        fileWriter.append(Score);
-        fileWriter.append(COMMA_DELIMITER);
-        fileWriter.append(vowel);
-        fileWriter.append(NEW_LINE_SEPARATOR);
-
+        osw.append(String.valueOf(currentTime));
+        osw.append(COMMA_DELIMITER);
+        osw.append(String.valueOf(f1));
+        osw.append(COMMA_DELIMITER);
+        osw.append(String.valueOf(f2));
+        osw.append(COMMA_DELIMITER);
+        osw.append(Score);
+        osw.append(COMMA_DELIMITER);
+        osw.append(vowel);
+        osw.append(NEW_LINE_SEPARATOR);
+        osw.flush();
+        osw.close();
     }
-    private void changeUserFile(double f1,double f2) throws IOException {
-
-        String NEW_LINE_SEPARATOR = "\n";
-        File internalStorageDir = getFilesDir();
-        File alice = new File(internalStorageDir, "alice.csv");
-
-        FileWriter fileWriter = new FileWriter("alice.csv");
-        Date currentTime = Calendar.getInstance().getTime();
-        fileWriter.append(String.valueOf(currentTime));
-        fileWriter.append(COMMA_DELIMITER);
-        fileWriter.append(String.valueOf(f1));
-        fileWriter.append(COMMA_DELIMITER);
-        fileWriter.append(String.valueOf(f2));
-        fileWriter.append(COMMA_DELIMITER);
-
-        fileWriter.append(NEW_LINE_SEPARATOR);
-
-    }
-    //will be ported to James file
-    public static void readUserFile() throws IOException {
-        BufferedReader fileReader = new BufferedReader(new FileReader("alice.csv"));
-
-        String line = "";
-        String data[][];
-        String[] tokens;
-        while ((line = fileReader.readLine()) != null) {
-
-
-            //Get all tokens available in line
-
-            tokens = line.split(COMMA_DELIMITER);
-
-            if (tokens.length > 0) {
 
 
 
-            }
-        }
-    }
     private void writeAudioDataToFile() {
         // Write the output audio in byte
         short sData[] = new short[BufferElements2Rec];
