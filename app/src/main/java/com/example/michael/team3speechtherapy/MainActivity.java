@@ -1,6 +1,5 @@
 package com.example.michael.team3speechtherapy;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -13,14 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
 public class MainActivity extends AppCompatActivity {
-
 
     private Button mRecord;
     private Button mStop;
@@ -52,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
     }
 
-
     public void initializeButtons() {
         mRecord = (Button) findViewById(R.id.playButton);
         mStop = (Button) findViewById(R.id.stopButton);
@@ -72,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     void recorderRaw() {
         int bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING);
@@ -167,4 +161,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return shortData;
     }
+
+    /*
+    function that makes returns a double array that is the raw audio data from the file
+    or change code so that we send a double array to the function and never store the audio data (probably better)
+    todo: work on a branch that implements just that.
+     */
 }
