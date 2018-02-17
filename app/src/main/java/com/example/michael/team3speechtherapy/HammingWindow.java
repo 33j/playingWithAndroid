@@ -34,7 +34,7 @@ public class HammingWindow {
         this.factors = getPrecomputedFactors(windowSize);
     }
 
-    public void applyFunction(double[] window) {
+    public double[] applyFunction(double[] window) {
         if (window.length == this.windowSize) {
             for (int i = 0; i < window.length; i++) {
                 window[i] *= factors[i];
@@ -43,6 +43,7 @@ public class HammingWindow {
             throw new IllegalArgumentException("Incompatible window size for this WindowFunction instance : " +
                     "expected " + windowSize + ", received " + window.length);
         }
+        return window;
     }
 
     protected double[] getPrecomputedFactors(int windowSize) {
