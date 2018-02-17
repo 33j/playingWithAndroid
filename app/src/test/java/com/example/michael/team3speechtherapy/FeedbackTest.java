@@ -12,7 +12,7 @@ public class FeedbackTest  {
 
     @Test
     public void scoreTest () throws Exception{
-       double actual_value= Feedback.score(3,4, Feedback.gender.M, Feedback.vowel.a);
+       double actual_value= Feedback.score(3,4, "M", "ee");
        assertEquals(5.0,actual_value,0);
     }
 }

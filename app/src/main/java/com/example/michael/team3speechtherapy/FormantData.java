@@ -9,9 +9,11 @@ public class FormantData {
     final String[] gender = {"M", "W", "CH"};
     final String[] vowels = {"ee", "i", "e", "ae", "ah", "aw", "^u", "oo", "u", "er"};
 
-    HashMap<String, HashMap<String, double[]>> table;
-    public void init()
+    static HashMap<String, HashMap<String, double[]>> table;
+    private static void init()
     {
+        if(table!=null)
+            return;
         //Create Hashtables
        table = new HashMap<String, HashMap<String, double[]>>();
 
@@ -54,16 +56,21 @@ public class FormantData {
 
     }
 
-    public void createSubMap(String g, String v, double f1, double f2)
+    private static void createSubMap(String g, String v, double f1, double f2)
     {
         HashMap<String, double[]> temp;
-
-        //Males
-        temp = new HashMap<String, double[]>();
+        if(table.containsKey(g)){
+            temp = table.get(g);
+        }
+        else {
+            //Males
+            temp = new HashMap<String, double[]>();
+            table.put(g, temp);
+        }
         temp.put(v, new double[]{f1, f2});
-        table.put(g, temp);
     }
-    public double[] getExpectedFormants(String g, String v){
+    public static double[] getExpectedFormants(String g, String v){
+        init();
         return table.get(g).get(v);
     }
 }
