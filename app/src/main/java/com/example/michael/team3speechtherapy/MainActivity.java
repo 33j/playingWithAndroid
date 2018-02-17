@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        }
     }
 
     private byte[] short2byte(short[] sData) {
