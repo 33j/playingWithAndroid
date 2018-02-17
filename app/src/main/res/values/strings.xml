@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">team3SpeechTherapy</string>
+    <string name="app_name">History</string>
+    <string name="dropdown_prompt">Select a Vowel</string>
+    <string-array name="vowels">
+        <item>ee</item>
+        <item>i</item>
+        <item>e</item>
+        <item>ae</item>
+        <item>ah</item>
+        <item>aw</item>
+        <item>^u</item>
+        <item>oo</item>
+        <item>u</item>
+        <item>er</item>
+    </string-array>
+
 </resources>
