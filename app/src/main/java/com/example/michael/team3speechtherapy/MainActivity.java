@@ -31,11 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE_PATH = "/sdcard/Test.pcm";
     private Boolean isRecording = false;
     private Thread recordingThread = null;
+    private AudioRecord record = null;
     int BufferElements2Rec = 1024;
     int BytesPerElement = 2;
 
-    private AudioRecord record = null;
-    // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -105,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void writeAudioDataToFile() {
         // Write the output audio in byte
         short sData[] = new short[BufferElements2Rec];
@@ -134,17 +131,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private byte[] short2byte(short[] sData) {
-        int shortArrsize = sData.length;
-        byte[] bytes = new byte[shortArrsize * 2];
-        for (int i = 0; i < shortArrsize; i++) {
-            bytes[i * 2] = (byte) (sData[i] & 0x00FF);
-            bytes[(i * 2) + 1] = (byte) (sData[i] >> 8);
-            sData[i] = 0;
-        }
-        return bytes;
-    }
-
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -157,5 +143,28 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+    }
+
+    private byte[] short2byte(short[] sData) {
+        int shortArrsize = sData.length;
+        byte[] bytes = new byte[shortArrsize * 2];
+        for (int i = 0; i < shortArrsize; i++) {
+            bytes[i * 2] = (byte) (sData[i] & 0x00FF);
+            bytes[(i * 2) + 1] = (byte) (sData[i] >> 8);
+            sData[i] = 0;
+        }
+        return bytes;
+    }
+
+    private short[] byte2short(byte[] byteData) {
+        int byteArrsize = byteData.length;
+        short tmp;
+        short[] shortData = new short[byteArrsize / 2];
+        for (int i = 0; i < byteArrsize / 2; i++) {
+            shortData[i] = (short) byteData[i*2];
+            tmp = (short) (byteData[(i*2) + 1] >> 8);
+            shortData[i] += tmp;
+        }
+        return shortData;
     }
 }
