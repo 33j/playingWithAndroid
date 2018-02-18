@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mRecord;
     private Button mStop;
     private ListView list;
-    private View myView;
+    //private Button hist;
     private Vibrator myVib;
 
     private static final int RECORDER_SAMPLERATE = 44100;
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myVib = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
         setContentView(R.layout.activity_main);
         verifyStoragePermissions(MainActivity.this);
         //initializeButtons();
@@ -100,8 +101,12 @@ public class MainActivity extends AppCompatActivity {
     public void initializeButtons() {
        // mRecord = (Button) findViewById(R.id.playButton);
         //mStop = (Button) findViewById(R.id.stopButton);
+        //hist = (Button) this.findViewById(R.id.btn1);
     }
 
+    private void vibr() {
+        myVib.vibrate(150);
+    }
     public void setListeners() {
         final Context context = this;
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -131,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchInstantFeedbackActivity(String word, String Vowel, String F1, String F2, String rating, String recommend){
+        vibr();
         Intent i = new Intent(this, InstantFeedbackActivity.class);
         i.putExtra("word", word);
         i.putExtra("vowel", Vowel);
@@ -143,14 +149,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchHistoryActivity(View view) {
+        vibr();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     public void launchAboutActivity(View view)
     {
+        vibr();
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
+
     }
 
     double[] recorderRaw() {
@@ -205,12 +214,12 @@ public class MainActivity extends AppCompatActivity {
         dData = short2double(sData);
         double[][] formants;
         double[] tmp;
-        HammingWindow hamm = new HammingWindow(dData.length); // FIX PARAMETERS
-        tmp = hamm.applyFunction(dData);
-        LinearPredictiveCoding lpc = new LinearPredictiveCoding(dData.length, 2); // FIX PARAMETERS
-        formants = lpc.applyLinearPredictiveCoding(tmp);
+       // HammingWindow hamm = new HammingWindow(dData.length); // FIX PARAMETERS
+       // tmp = hamm.applyFunction(dData);
+        //LinearPredictiveCoding lpc = new LinearPredictiveCoding(dData.length, 2); // FIX PARAMETERS
+        //formants = lpc.applyLinearPredictiveCoding(tmp);
 
-        tmpwrite(formants);
+        //tmpwrite(formants);
     }
 
     private void tmpwrite(double[][] d) throws IOException {
