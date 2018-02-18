@@ -13,5 +13,17 @@
         <item>u</item>
         <item>er</item>
     </string-array>
+    <string-array name="words">
+        <item>Beet</item>
+        <item>Bit</item>
+        <item>Bet</item>
+        <item>Bat</item>
+        <item>But</item>
+        <item>Not</item>
+        <item>Bought</item>
+        <item>Foot</item>
+        <item>Boot</item>
+        <item>Bird</item>
+    </string-array>
 
 </resources>

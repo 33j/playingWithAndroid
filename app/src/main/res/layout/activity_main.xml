@@ -6,24 +6,41 @@
     android:layout_height="match_parent"
     tools:context="com.example.michael.team3speechtherapy.MainActivity">
 
-    <Button
-        android:id="@+id/playButton"
-        android:layout_width="107dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="36dp"
-        android:layout_marginLeft="69dp"
-        android:text="Play"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="112dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="33dp"
-        android:layout_marginRight="53dp"
-        android:text="Stop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <ListView
+            android:entries="@array/words"
+            android:id="@+id/words"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.90"
+            android:clickable="true"
+            android:focusable="true"
+            android:scrollbars="vertical">
+        </ListView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".10"
+            android:orientation="horizontal">
+            <Button
+                android:text="History"
+                android:onClick="launchHistoryActivity"
+                android:id="@+id/btn1"
+                android:layout_width="0dp"
+                android:layout_weight="0.50"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="0dp"
+                android:layout_weight="0.50"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
