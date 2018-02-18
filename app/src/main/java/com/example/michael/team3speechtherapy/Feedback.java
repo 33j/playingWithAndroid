@@ -50,6 +50,59 @@ public class Feedback {
 
     }
 
+    public static String[] simluationFeedback(double f1,double f2,String profile, String v){
+        double[] ExpectedFormances = FormantData.getExpectedFormants(profile,v);
+        double F1, F2;
+        F1 = ExpectedFormances[0];
+        F2 = ExpectedFormances[1];
+        //means f1 is too high
+        String[] recommendation=new String[3];
+        int i=0;
+        if(f1-F1>15){
+            //close mouth and higher tongue
+            recommendation[i]="Close mouth a little and higher tongue.";
+            i++;
+            if(f2-F2>15) {
+
+
+                recommendation[i] = "Advance tongue less.";
+                i++;
+            }
+        }
+        //means f2 is too high
+        else if(f2-F2>15){
+            //advance tongue less
+            recommendation[i]="Advance tongue less.";
+            i++;
+
+        }
+        //means f1 is too low
+       else if(f1-F1<-15){
+            //open mouth wider and lower tongue
+            recommendation[i]="Open mouth wider and lower tongue.";
+            i++;
+            if(f2-F2<-15){
+                recommendation[i]="Advance tongue more.";
+                i++;
+            }
+
+        }
+        //means f2 is too low
+        else if(f2-F2<-15){
+            //advance tongue more
+            recommendation[i]="Advance tongue more.";
+            i++;
+
+        }
+        else{
+            recommendation[i]="Wow you're fantastic!";
+            i++;
+        }
+        return recommendation;
+
+
+    }
+
 }
 
 
