@@ -147,6 +147,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void launchAboutActivity(View view)
+    {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
 
     double[] recorderRaw() {
         int bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING);
@@ -243,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void changeUserFile(double f1,double f2, String Score, String vowel) throws IOException {
         String COMMA_DELIMITER = ",";
         String NEW_LINE_SEPARATOR = "\n";
