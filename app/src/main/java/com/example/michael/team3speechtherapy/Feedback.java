@@ -37,7 +37,7 @@ public class Feedback {
         return Math.sqrt(Math.pow(F1 - f1, 2) + Math.pow(F2 - f2, 2));
     }
 
-    public static String[] simluationFeedback(double f1,double f2,String profile, String v){
+    public static String simluationFeedback(double f1,double f2,String profile, String v){
         double[] ExpectedFormances = FormantData.getExpectedFormants(profile,v);
         double F1, F2;
         F1 = ExpectedFormances[0];
@@ -50,8 +50,6 @@ public class Feedback {
             recommendation[i]="Close mouth a little and higher tongue.";
             i++;
             if(f2-F2>15) {
-
-
                 recommendation[i] = "Advance tongue less.";
                 i++;
             }
@@ -61,7 +59,6 @@ public class Feedback {
             //advance tongue less
             recommendation[i]="Advance tongue less.";
             i++;
-
         }
         //means f1 is too low
        else if(f1-F1<-15){
@@ -72,24 +69,25 @@ public class Feedback {
                 recommendation[i]="Advance tongue more.";
                 i++;
             }
-
         }
         //means f2 is too low
         else if(f2-F2<-15){
             //advance tongue more
             recommendation[i]="Advance tongue more.";
             i++;
-
         }
         else{
             recommendation[i]="Wow you're fantastic!";
             i++;
         }
-        return recommendation;
-
-
+        i=0;
+        String appended="";
+        while(recommendation[i]!=null) {
+            appended=appended+" "+recommendation[i];
+            i++;
+        }
+            return appended;
     }
-
 }
 
 

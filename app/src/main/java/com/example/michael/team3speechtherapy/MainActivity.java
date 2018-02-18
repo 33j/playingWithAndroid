@@ -38,6 +38,7 @@ import java.io.IOException;
 
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,7 +46,6 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private Button mRecord;
     private Button mStop;
     private ListView list;
@@ -113,6 +113,14 @@ public class MainActivity extends AppCompatActivity {
                 double[] formants = recorderRaw();
                 double score = Feedback.score(formants[0],formants[1],"M",getResources().getStringArray(R.array.vowels)[position]);
                 try {
+                    //Jamie's Alg
+                    String visual = Feedback.simluationFeedback(formants[0],formants[1],"M",getResources().getStringArray(R.array.vowels)[position]);
+
+                    String F1=String.valueOf(formants[0]);
+                    String F2=String.valueOf(formants[1]);
+                    String Score= String.valueOf(score);
+                    launchInstantFeedbackActivity(currWord,getResources().getStringArray(R.array.vowels)[position],F1,F2,Score, visual );
+                    //updates user stats
                     changeUserFile(formants[0],formants[1],"Good",getResources().getStringArray(R.array.vowels)[position]);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -120,6 +128,18 @@ public class MainActivity extends AppCompatActivity {
                 isRecording = false;
             }
         });
+    }
+
+    public void launchInstantFeedbackActivity(String word, String Vowel, String F1, String F2, String rating, String recommend){
+        Intent i = new Intent(this, InstantFeedbackActivity.class);
+        i.putExtra("word", word);
+        i.putExtra("vowel", Vowel);
+        i.putExtra("F1", F1);
+        i.putExtra("F2",F2);
+        i.putExtra("rating",rating);
+        i.putExtra("recommend",recommend);
+
+        startActivity(i);
     }
 
     public void launchHistoryActivity(View view) {
@@ -168,9 +188,7 @@ public class MainActivity extends AppCompatActivity {
         //} catch (IOException e) {
         //    e.printStackTrace();
         //}
-
         return new double[]{700,2300};
-
     }
 
     private void getFormants() throws IOException {
