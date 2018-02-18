@@ -11,10 +11,6 @@ import java.io.OutputStream;
  */
 
 public class Feedback {
-
-
-
-
     public static void saveToFile(){
         /*String FILENAME = "hello_file";
         String string = "hello world!";
@@ -22,23 +18,16 @@ public class Feedback {
         FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
         fos.write(string.getBytes());
         fos.close();*/
-
-
     }
-
     //private static FileOutputStream openFileOutput(String filename, int modePrivate) {
     //openFileOutput(filename);
     //}
-
     public static double score(double f1, double f2, String profile, String v) {
-
-
         double mag = magnitude(f1, f2, profile, v);
         return mag;
         //return 5;
         //saveToFile();
     }
-
     public static double magnitude(double f1, double f2, String profile, String  v) {
         double[] ExpectedFormances = FormantData.getExpectedFormants(profile, v);
         System.out.println(Arrays.toString(ExpectedFormances));
@@ -46,11 +35,9 @@ public class Feedback {
         F1 = ExpectedFormances[0];
         F2 = ExpectedFormances[1];
         return Math.sqrt(Math.pow(F1 - f1, 2) + Math.pow(F2 - f2, 2));
-
-
     }
 
-    public static String[] simluationFeedback(double f1,double f2,String profile, String v){
+    public static String simluationFeedback(double f1,double f2,String profile, String v){
         double[] ExpectedFormances = FormantData.getExpectedFormants(profile,v);
         double F1, F2;
         F1 = ExpectedFormances[0];
@@ -63,8 +50,6 @@ public class Feedback {
             recommendation[i]="Close mouth a little and higher tongue.";
             i++;
             if(f2-F2>15) {
-
-
                 recommendation[i] = "Advance tongue less.";
                 i++;
             }
@@ -74,7 +59,6 @@ public class Feedback {
             //advance tongue less
             recommendation[i]="Advance tongue less.";
             i++;
-
         }
         //means f1 is too low
        else if(f1-F1<-15){
@@ -85,24 +69,25 @@ public class Feedback {
                 recommendation[i]="Advance tongue more.";
                 i++;
             }
-
         }
         //means f2 is too low
         else if(f2-F2<-15){
             //advance tongue more
             recommendation[i]="Advance tongue more.";
             i++;
-
         }
         else{
             recommendation[i]="Wow you're fantastic!";
             i++;
         }
-        return recommendation;
-
-
+        i=0;
+        String appended="";
+        while(recommendation[i]!=null) {
+            appended=appended+" "+recommendation[i];
+            i++;
+        }
+            return appended;
     }
-
 }
 
 

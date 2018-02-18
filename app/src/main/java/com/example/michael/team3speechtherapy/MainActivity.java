@@ -38,6 +38,7 @@ import java.io.IOException;
 
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,13 +46,11 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private Button mRecord;
     private Button mStop;
     private ListView list;
     private View myView;
     private Vibrator myVib;
-
 
     private static final int RECORDER_SAMPLERATE = 44100;
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
@@ -114,6 +113,14 @@ public class MainActivity extends AppCompatActivity {
                 double[] formants = recorderRaw();
                 double score = Feedback.score(formants[0],formants[1],"M",getResources().getStringArray(R.array.vowels)[position]);
                 try {
+                    //Jamie's Alg
+                    String visual = Feedback.simluationFeedback(formants[0],formants[1],"M",getResources().getStringArray(R.array.vowels)[position]);
+
+                    String F1=String.valueOf(formants[0]);
+                    String F2=String.valueOf(formants[1]);
+                    String Score= String.valueOf(score);
+                    launchInstantFeedbackActivity(currWord,getResources().getStringArray(R.array.vowels)[position],F1,F2,Score, visual );
+                    //updates user stats
                     changeUserFile(formants[0],formants[1],"Good",getResources().getStringArray(R.array.vowels)[position]);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -123,11 +130,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void launchInstantFeedbackActivity(String word, String Vowel, String F1, String F2, String rating, String recommend){
+        Intent i = new Intent(this, InstantFeedbackActivity.class);
+        i.putExtra("word", word);
+        i.putExtra("vowel", Vowel);
+        i.putExtra("F1", F1);
+        i.putExtra("F2",F2);
+        i.putExtra("rating",rating);
+        i.putExtra("recommend",recommend);
+
+        startActivity(i);
+    }
+
     public void launchHistoryActivity(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
+    public void launchAboutActivity(View view)
+    {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
 
     double[] recorderRaw() {
         int bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING);
@@ -169,9 +193,7 @@ public class MainActivity extends AppCompatActivity {
         //} catch (IOException e) {
         //    e.printStackTrace();
         //}
-
         return new double[]{700,2300};
-
     }
 
     private void getFormants() throws IOException {
@@ -226,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void changeUserFile(double f1,double f2, String Score, String vowel) throws IOException {
         String COMMA_DELIMITER = ",";
         String NEW_LINE_SEPARATOR = "\n";

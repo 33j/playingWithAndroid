@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.michael.team3speechtherapy.InstantFeedbackActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="96dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Word: " />
+
+            <TextView
+                android:id="@+id/wordIFA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bird bird bird" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vowel: " />
+
+            <TextView
+                android:id="@+id/vowelIFA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ER" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Formant1 " />
+
+            <TextView
+                android:id="@+id/f1IFA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXXXXX" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Formant2: " />
+
+            <TextView
+                android:id="@+id/f2IFA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="YYYYYYY" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating: " />
+
+            <TextView
+                android:id="@+id/ratingIFA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Good" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recommendation: " />
+
+        <TextView
+            android:id="@+id/recommendationIFA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Do something so that you cann improve your accents. " />
+    </LinearLayout>
+
+    <!--<TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:text="Just the tip"
+                />
+
+        </TableRow>
+
+    </TableLayout>-->
+
+</android.support.constraint.ConstraintLayout>
