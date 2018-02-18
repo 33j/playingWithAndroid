@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">History</string>
+    <string name="app_name">VowelBuddy</string>
     <string name="dropdown_prompt">Select a Vowel</string>
     <string-array name="vowels">
         <item>ee</item>
