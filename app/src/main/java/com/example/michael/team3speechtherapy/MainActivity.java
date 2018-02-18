@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void changeUserFile(double f1,double f2, String Score, String vowel) throws IOException {
         String COMMA_DELIMITER = ",";
         String NEW_LINE_SEPARATOR = "\n";

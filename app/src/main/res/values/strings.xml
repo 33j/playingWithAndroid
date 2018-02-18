@@ -25,5 +25,38 @@
         <item>Boot</item>
         <item>Bird</item>
     </string-array>
+    <string name="title_activity_about">About</string>
+    <string name="large_text">
+        "Universal Mobile Speech Therapy\n\n"
+
+        "'An Innovative Advancement to Communicative Technologies'\n\n"
+
+        "Features include 30+ words of vocabulary, Speech Progression Timeline, Speech Vowel Recognition, Numerical Acoustic Analysis.\n\n"
+
+        "How it Works\n\n"
+        "1.) Choose a word from the menu and pronounce it over a few seconds.\n\n"
+        "2.) Wait for the magic to happen as our application provides you with qualified recommendations to improve your speech!\n\n"
+        "Touch the history button to track your progress!\n\n"
+
+        "Our System\n\n"
+        "Utilizing modern clinical research data, we provide our users with extensive numerical studies based on our:\n\n"
+        "Linear Predictive Algorithms\n\n"
+        "Pre-emphasis filters\n\n"
+        "Pre-derived Hamming Window\n\n"
+
+        "Guide to understanding our Data\n\n"
+        "Our instant feedback feature describes:\n\n"
+        "Word: Word recognized by our system."
+        "Vowels: Vowels emphasized in grammatical pronunciation of the word."
+        "Gender: Differentiates between various sexes."
+        "F1: Describes the frequency that correlates with wider mouth and lower tongue positioning.\n\n"
+        "F2: Describes the frequency that correlates with extension of the tongue.\n\n"
+        "Rating: Derived from acoustic analysis utlizing statistical dot-plots with the two formants, our application designates a predictive score for proper pronunciation./n/n"
+
+
+
+
+    </string>
+    <string name="action_settings">Settings</string>
 
 </resources>
