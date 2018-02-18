@@ -32,6 +32,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -211,7 +212,9 @@ public class MainActivity extends AppCompatActivity {
         FileOutputStream fos = openFileOutput("alice.csv",MODE_APPEND);
         OutputStreamWriter osw = new OutputStreamWriter(fos);
         Date currentTime = Calendar.getInstance().getTime();
-        osw.append(String.valueOf(currentTime));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy ");
+        osw.append(dateFormat.format(currentTime));
+        //osw.append(dateFormat.format(currentTime.toString()));
         osw.append(COMMA_DELIMITER);
         osw.append(String.valueOf(f1));
         osw.append(COMMA_DELIMITER);

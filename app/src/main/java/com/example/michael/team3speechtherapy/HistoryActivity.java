@@ -31,8 +31,26 @@ public class HistoryActivity extends AppCompatActivity {
 
     public ArrayList<String[]> filterHistory(String vowel)
     {
-        return history;
+        ArrayList<String[]> filtered = new ArrayList<String[]>();
+
+        //Get the index of the vowel.]
+        for(int i=0;i< history.size();i++) {
+            if(!history.get(i)[4].equals(selectedVowel)){
+                continue;
+            }
+            filtered.add(new String[]{history.get(i)[0], history.get(i)[1], history.get(i)[2], history.get(i)[3]});
+        }
+
+        return filtered; // The Current Data.
     }
+
+
+
+
+
+
+
+
 
     //Filter history, set vowel, update UI.
     private void updateUi()
@@ -120,9 +138,5 @@ public class HistoryActivity extends AppCompatActivity {
         return returnValues;
     }
 
-    //Create a send button
-    public void sendButton()
-    {
 
-    }
 }
