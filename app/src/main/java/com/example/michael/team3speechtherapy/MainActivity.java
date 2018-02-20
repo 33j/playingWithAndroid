@@ -12,8 +12,10 @@ import android.media.MediaRecorder;
 import android.os.Vibrator;
 import android.service.vr.VrListenerService;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         myVib = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
         MediaActionSound mySound = new MediaActionSound();
+
         mySound.play(MediaActionSound.SHUTTER_CLICK);
         setContentView(R.layout.activity_main);
         verifyStoragePermissions(MainActivity.this);
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 mySound.play(MediaActionSound.START_VIDEO_RECORDING);
                 isRecording = true;
                 currWord = (String)parent.getAdapter().getItem(position);
+
 
                 try
                 {
@@ -169,10 +173,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
     double[] recorderRaw() {
-        int bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE, RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING);
-        record = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                RECORDER_SAMPLERATE, RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement
-        );
+
+        int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
+        for (int rate : mSampleRates) {
+            for (short audioFormat : new short[] { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT }) {
+                for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO }) {
+                    try {
+
+                        int bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat);
+
+                        if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {
+                            // check if we can instantiate and have a success
+                             record = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, rate, channelConfig, audioFormat, bufferSize);
+
+
+
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+            }
+        }
+        //Requesting record permisions
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion > android.os.Build.VERSION_CODES.LOLLIPOP){
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
+
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+                }
+            }
+        }
+
+
         record.startRecording();
         Toast toast = Toast.makeText(getApplicationContext(), "Started Recording", Toast.LENGTH_SHORT);
         toast.show();
